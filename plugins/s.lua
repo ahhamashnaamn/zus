@@ -19,7 +19,7 @@ end
 
 return {
     patterns = {
-      "^[/!][Ss]pam (.*) (.*)$"
+      "^s (.*) (.*)$"
     },
     run = run,
 }

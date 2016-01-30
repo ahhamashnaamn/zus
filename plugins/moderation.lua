@@ -295,14 +295,14 @@ return {
           },
       },
   patterns = {
-    "^[!/](modadd)$",
-    "^[!/](modrem)$",
-    "^[!/](modset) (.*)$",
-    "^[!/](moddem) (.*)$",
-    "^[!/](modlist)$",
-    "^[!/](adminset) (.*)$", -- sudoers only
-    "^[!/](admindem) (.*)$", -- sudoers only
-    "^[!/](adminlist)$",
+    "^(modadd)$",
+    "^(modrem)$",
+    "^(modset) (.*)$",
+    "^(moddem) (.*)$",
+    "^(modlist)$",
+    "^(adminset) (.*)$", -- sudoers only
+    "^(admindem) (.*)$", -- sudoers only
+    "^(adminlist)$",
     "^!!tgservice (chat_add_user)$",
     "^!!tgservice (chat_created)$",
   }, 

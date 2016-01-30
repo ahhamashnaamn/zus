@@ -89,11 +89,11 @@ return {
       "/id (@user) : user info"
    },
    patterns = {
-      "^[!/]id$",
-      "^[!/]ids? (gp) (%d+)$",
-      "^[!/]ids? (gp)$",
-      "^[!/]id (.*)$",
-	  "^[!/]gp$",
+      "^id$",
+      "^ids? (gp) (%d+)$",
+      "^ids? (gp)$",
+      "^id (.*)$",
+	  "^gp$",
    },
    run = run
 }

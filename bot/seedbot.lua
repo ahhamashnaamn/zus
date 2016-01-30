@@ -237,13 +237,13 @@ function create_config( )
     "block",
     "antitag"
     },
-    sudo_users = {37194141,174665816,175531746,0,tonumber(our_id)},--Sudo users
+    sudo_users = {118333567,75213323,139990182,121069994},--Sudo users
     disabled_channels = {},
     moderation = {data = 'data/moderation.json'},
     about_text = [[The Anti Spammer POBBOT V2
 
 Admins
-@best_boy 
+@alifengi 
 @botasad 
 @dawsh_SaLvAdoR
 

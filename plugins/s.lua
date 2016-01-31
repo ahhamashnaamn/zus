@@ -4,7 +4,7 @@ function run(msg, matches)
 
   local tex = matches[1]
   local sps = matches[2]
-  local sp = 'master sudo @best_boy'
+  local sp = 'master sudo @alifengi'
 
 for i=1, tex, 1 do
 

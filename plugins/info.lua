@@ -1,10 +1,15 @@
+
 --[[
+
 Print user identification/informations by replying their post or by providing
 their username or print_name.
-!info <text> is the least reliable because it will scan trough all of members
+
+!id <text> is the least reliable because it will scan trough all of members
 and print all member with <text> in their print_name.
+
 chat_info can be displayed on group, send it into PM, or save as file then send
 it into group or PM.
+
 --]]
 
 do
@@ -36,7 +41,7 @@ do
                ..'First name: '..(user.first_name or '')..'\n'
                ..'Last name: '..(user.last_name or '')..'\n'
                ..'User name: @'..(user.username or '')..'\n'
-               ..'ID: '..(user.id  or '')..'\n\n'
+               ..'ID: '..(user.id  or '')..'\n'
       end
       send_large_msg(extra.receiver, text)
     end
@@ -88,7 +93,7 @@ do
     if is_chat_msg(msg) then
       if msg.text == '!info' then
         if msg.reply_id then
-          if is_mod(msg) then
+          if is_mod(msg.from.id, msg.to.id) then
             msgr = get_message(msg.reply_id, action_by_reply, {receiver=receiver})
           end
         else
@@ -97,49 +102,48 @@ do
                        ..'Last name: '..(msg.from.last_name or '')..'\n'
                        ..'User name: @'..(msg.from.username or '')..'\n'
                        ..'ID: ' .. msg.from.id
-          local text = text..'\n\nYou are in group '
+          local text = text..'\nYou are in group '
                        ..msg.to.title..' (ID: '..msg.to.id..')'
           return text
         end
-      elseif is_mod(msg) and matches[1] == 'chat' then
+      elseif is_mod(msg.from.id, msg.to.id) and matches[1] == 'chat' then
         if matches[2] == 'pm' or matches[2] == 'txt' or matches[2] == 'pmtxt' then
           chat_info(receiver, returnids, {msg=msg, matches=matches[2]})
         else
           chat_info(receiver, returnids, {msg=msg})
         end
-      elseif is_mod(msg) and string.match(matches[1], '^@.+$') then
+      elseif is_mod(msg.from.id, msg.to.id) and string.match(matches[1], '^@.+$') then
         chat_info(receiver, scan_name, {receiver=receiver, user=matches[1]})
-      elseif is_mod(msg) and string.gsub(matches[1], ' ', '_') then
+      elseif is_mod(msg.from.id, msg.to.id) and string.gsub(matches[1], ' ', '_') then
         user = string.gsub(matches[1], ' ', '_')
         chat_info(receiver, scan_name, {receiver=receiver, name=matches[1]})
       end
     else
-      return 'You are not in a group.'
+      return 'Info Only Works In Group'
     end
   end
 
   return {
-    description = 'Know your id or the id of a chat members.',
+    description = 'Know your info or the info of a chat members.',
     usage = {
       user = {
-        '!info: will show your id and group id .'
+        '!info: Return your ID and the chat info if you are in one.'
       },
       moderator = {
-        '!info : will give you the id of member or yourself',
-        '!info chat : the ids of chat',
-        '!info chat txt : will give the ids of chat in text file',
-        '!info chat pm : will give chat ids in Private ',
-        '!info chat pmtxt : will give chat ids in text file to your privat',
-        '!info <id> : will shot the ids of chat group',
-        '!info @<user_name> : will return the info of username ',
-        '!info <text> : will return the info of that name or last name'
+        '!info : Return ID of replied user if used by reply.',
+        '!info chat : Return the IDs of the current chat members.',
+        '!info chat txt : Return the IDs of the current chat members and send it as text file.',
+        '!info chat pm : Return the IDs of the current chat members and send it to PM.',
+        '!info chat pmtxt : Return the IDs of the current chat members, save it as text file and then send it to PM.',
+        '!info <id> : Return the IDs of the <id>.',
+        '!info @<user_name> : Return the member @<user_name> ID from the current chat.',
+        '!info <text> : Search for users with <text> on first_name, last_name, or print_name on current chat.'
       },
     },
     patterns = {
-      "^info$",
-      "^info (chat) (.*)$",
-	  "^info (chat) (.*)$",
-      "^info (.*)$"
+      "^[!/]info$",
+      "^[!/]info (chat) (.*)$",
+      "^[!/]info (.*)$"
     },
     run = run
   }
